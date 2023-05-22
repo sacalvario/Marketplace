@@ -1,0 +1,17 @@
+(defrule main-loop
+  =>
+  (printout t "=== Orden de Compra ===" crlf)
+  (printout t "Ingrese el ID del cliente: ")
+  (bind ?id (read))
+  (printout t "Ingrese los productos de la orden de compra (separados por comas): ")
+  (bind ?productos (read))
+  (assert (orden-compra (cliente-id ?id) (productos $?productos)))
+  (run)
+  (printout t "=== Resultado ===" crlf)
+  (if (asserted (oferta (descripcion ?descripcion)))
+    then (printout t ?descripcion crlf))
+  (if (asserted (descuento (porcentaje ?porcentaje)))
+    then (printout t "Descuento: " ?porcentaje "%" crlf))
+  (if (asserted (sugerencia (descripcion ?descripcion)))
+    then (printout t ?descripcion crlf))
+)
